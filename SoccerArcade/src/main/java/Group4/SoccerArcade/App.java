@@ -1,12 +1,16 @@
-package SoccerArcade;
-
+package Group4.SoccerArcade;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.application.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.*;
 
 
-public class Main extends Application 
+public class App extends Application 
 {
 	/**
 	 * ON APP START
@@ -35,5 +39,3 @@ public class Main extends Application
 		launch(args);
 	}
 }
-
-//ARRAY LIST OF OBJECTS FOR VARIABLE MENU ITEMS

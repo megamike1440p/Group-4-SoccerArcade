@@ -2,22 +2,18 @@ package Group4.SoccerArcade;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class MenuManager extends Pane
 {
 	/**
 	 * Panes
 	 */
-	private BorderPane mainPane;
-	private BorderPane playerSelectPane;
-	private BorderPane optionsPane;
-	private BorderPane pausePane;
+	private BorderPane mainPane = new BorderPane();
+	private BorderPane playerSelectPane = new BorderPane();
+	private BorderPane optionsPane = new BorderPane();
+	private BorderPane pausePane = new BorderPane();
 
 	/**
 	 * scenes
@@ -35,15 +31,17 @@ public class MenuManager extends Pane
 		super();
 	}
 
+	/**
+	 * The main menu scene
+	 * @return mainMenu
+	 * @author Whitten/Andrew
+	 */
 	public Scene mainMenu() 
 	{ 
 		ButtonManager button = new ButtonManager();
-        BorderPane mainPane = new BorderPane();
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().add(button.start());
-        //vbox.getChildren().add(button.getOptions());
-        //vbox.getChildren().add(button.getExit());
+        vbox.getChildren().addAll(button.start(),button.getOptions(),button.getExit());
         vbox.setSpacing(5);
         vbox.setScaleX(4);
         vbox.setScaleY(4);
@@ -55,15 +53,14 @@ public class MenuManager extends Pane
 	/**
 	 * The scene for the player select screen
 	 * @return playerSelect
-	 * @author Whitten
+	 * @author Whitten/Andrew
 	 */
 	public Scene playerSelect()
 	{	
 		ButtonManager button = new ButtonManager();
-		playerSelectPane = new BorderPane();
 		VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-		vbox.getChildren().addAll(button.onePlayer(), button.twoPlayer());
+		vbox.getChildren().addAll(button.onePlayer(), button.twoPlayer(), button.back());
         vbox.setSpacing(5);
         vbox.setScaleX(4);
         vbox.setScaleY(4);

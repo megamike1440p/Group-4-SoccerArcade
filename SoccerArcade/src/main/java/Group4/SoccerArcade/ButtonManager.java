@@ -27,7 +27,8 @@ public class ButtonManager
 				//TEST
 				System.out.println("Start Pressed");
 				App.getStage().setScene(new MenuManager().playerSelect());
-		});
+		});	
+		
 		return start;
 	}
 	
@@ -81,7 +82,9 @@ public class ButtonManager
 		onePlayer.setOnAction(e-> 
 		{
 			System.out.println("One Player pressed");
+			new Player().setGameScene();
 		});
+
 		return onePlayer;
 	}
 	

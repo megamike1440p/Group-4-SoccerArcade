@@ -82,7 +82,7 @@ public class ButtonManager
 		onePlayer.setOnAction(e-> 
 		{
 			System.out.println("One Player pressed");
-			new Player().setGameScene();
+			new GameSetter().setOnePlayer();
 		});
 
 		return onePlayer;
@@ -100,6 +100,7 @@ public class ButtonManager
 		twoPlayer.setOnAction(e-> 
 		{
 			System.out.println("Two Player pressed");
+			new GameSetter().setTwoPlayer();
 		});
 		return twoPlayer;
 	}

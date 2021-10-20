@@ -16,7 +16,6 @@ public class App extends Application
 	{
 		staticStage = primaryStage;
 
-		//final MenuManager manager = new MenuManager();
 		//SET THE TITLE
 		primaryStage.setTitle("Soccer Arcade");
 		

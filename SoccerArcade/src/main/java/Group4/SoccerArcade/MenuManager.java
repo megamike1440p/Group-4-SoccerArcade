@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 public class MenuManager extends Pane
 {
 	/**
-	 * Panes
+	 * Panes to be used in scenes
 	 */
 	private BorderPane mainPane = new BorderPane();
 	private BorderPane playerSelectPane = new BorderPane();
@@ -16,7 +16,7 @@ public class MenuManager extends Pane
 	private BorderPane pausePane = new BorderPane();
 
 	/**
-	 * scenes
+	 * scenes to be returned to the stage
 	 */
 	private Scene mainMenu;
 	private Scene playerSelectMenu;
@@ -25,6 +25,7 @@ public class MenuManager extends Pane
 	
 	/**
 	 * CONSTRUCTOR
+	 * TODO
 	 */
 	public MenuManager()
 	{

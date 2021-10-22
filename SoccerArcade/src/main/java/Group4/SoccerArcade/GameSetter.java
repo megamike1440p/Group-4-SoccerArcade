@@ -1,5 +1,4 @@
 package Group4.SoccerArcade;
-
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -9,8 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 /**
- * This class contains information regarding creating and controlling player characters, as well as setting the game scene
- * This class will likely need to be split up as development progresses
+ * This class contains information regarding creating and controlling player characters, as well as setting the game scene, could stand to be separated into two classes
  * @author 
  */
 public class GameSetter 
@@ -40,6 +38,24 @@ public class GameSetter
 	//Bools for controlling character movements
 	boolean running, goNorth, goSouth, goEast, goWest;
 	boolean running2, goNorth2, goSouth2, goEast2, goWest2;
+	boolean collision = false;
+	
+	/**
+	 * Collision detection
+	 */
+	private boolean playerCollision()
+	{
+		if (playerOne.getBoundsInParent().intersects(playerTwo.getBoundsInParent()))
+		{
+			System.out.println("collision == true");
+			return true;
+		}
+		else 
+		{
+			System.out.println("collision == false");
+			return false;
+		}
+	}
 	
 	/**
 	 * movePlayerBy is a function which works in conjunction with movePlayerTwo and an animation timer in order to control a sprite's movement
@@ -47,7 +63,7 @@ public class GameSetter
 	 * @param dx
 	 * @param dy
 	 */
-	private void movePlayerBy(Node player, int dx, int dy) 
+	public void movePlayerBy(Node player, int dx, int dy) 
     {
     	if (dx == 0 && dy == 0) return;
     	final double cx = player.getBoundsInLocal().getWidth()  / 2;
@@ -63,14 +79,16 @@ public class GameSetter
 	 * @param x
 	 * @param y
 	 */
-    private void movePlayerTo(Node player, double x, double y) 
+    public void movePlayerTo(Node player, double x, double y) 
     {
         final double cx = player.getBoundsInLocal().getWidth()  / 2;
         final double cy = player.getBoundsInLocal().getHeight() / 2;
-        if (x - cx >= 0 &&
+        if (collision != true &&
+        	x - cx >= 0 &&
             x + cx <= W &&
             y - cy >= 0 &&
-            y + cy <= H) 
+            y + cy <= H)
+        
         {
             player.relocate(x - cx, y - cy);
         }
@@ -105,7 +123,6 @@ public class GameSetter
         		case D: goEast  = true; playerOne.setRotate(0); break;
                	case SHIFT: running = true; break;
            	}
-        	
     	});
     	onePlayer.setOnKeyReleased(e->
     	{
@@ -130,7 +147,6 @@ public class GameSetter
             if (goEast)  dx += 1;
             if (goWest)  dx -= 1;
             if (running) { dx *= 3; dy *= 3; }
-
             movePlayerBy(playerOne, dx, dy);
         }
     };
@@ -195,32 +211,40 @@ public class GameSetter
             } 
          });
         
-        //Timer for player one's animations
+        //Timer for player one's animations, also handles collision testing
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) 
             {
                 int dx = 0, dy = 0;
-                if (goNorth) dy -= 1;
-                if (goSouth) dy += 1;
-                if (goEast)  dx += 1;
-                if (goWest)  dx -= 1;
-                if (running) { dx *= 3; dy *= 3; }
+                if ((goNorth == true) && (playerCollision()) == false) {dy -= 1;}
+                else if ((goNorth == true) && (playerCollision()) == true) {dy += 1;}
+                if ((goSouth == true) && (playerCollision()) == false) {dy += 1;}
+                else if ((goSouth == true) && (playerCollision()) == true) {dy -= 1;}
+                if ((goEast == true) && (playerCollision()) == false) {dx += 1;}
+                else if ((goEast == true) && (playerCollision()) == true) {dx -=1;}
+                if ((goWest == true) && (playerCollision()) == false) {dx -= 1;}
+                else if ((goWest == true) && (playerCollision()) == true) {dx +=1;}
+                if (running) { dx *= 2; dy *= 2; }
                 movePlayerBy(playerOne, dx, dy);
             }
         };
         
-        //Timer for player two's animations
+        //Timer for player two's animations, also handles collision checking
         AnimationTimer timer2 = new AnimationTimer() {
             @Override
             public void handle(long now) 
             {
                 int dx = 0, dy = 0;
-                if (goNorth2) dy -= 1;
-                if (goSouth2) dy += 1;
-                if (goEast2)  dx += 1;
-                if (goWest2)  dx -= 1;
-                if (running2) { dx *= 3; dy *= 3; }
+                if ((goNorth2 == true) && (playerCollision()) == false) {dy -= 1;}
+                else if ((goNorth2 == true) && (playerCollision()) == true) {dy += 1;}
+                if ((goSouth2 == true) && (playerCollision()) == false) {dy += 1;}
+                else if ((goSouth2 == true) && (playerCollision()) == true) {dy -= 1;}
+                if ((goEast2 == true) && (playerCollision()) == false) {dx += 1;}
+                else if ((goEast2 == true) && (playerCollision()) == true) {dx -=1;}
+                if ((goWest2 == true) && (playerCollision()) == false) {dx -= 1;}
+                else if ((goWest2 == true) && (playerCollision()) == true) {dx +=1;}
+                if (running2) { dx *= 2; dy *= 2; }
                 movePlayerBy(playerTwo, dx, dy);
             }
         };

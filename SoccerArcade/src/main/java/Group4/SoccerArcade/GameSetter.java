@@ -1,8 +1,12 @@
 package Group4.SoccerArcade;
+import java.util.Optional;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -94,6 +98,34 @@ public class GameSetter
         }
     }
     
+    
+    /**
+     *	pause is a function that allows the player to return to the main menu or cancel and return to the game 
+     * 
+     * 
+     */
+    
+    private void pause() 
+	{
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("PAUSE");
+		alert.setHeaderText("EXIT TO MAIN MENU");
+		alert.setResizable(false);		
+		alert.setX(W/2);
+		alert.setY(H/2);
+		Optional<ButtonType> result = alert.showAndWait();
+		ButtonType button = result.orElse(ButtonType.CANCEL);
+
+		if (button == ButtonType.OK) 
+		{
+			App.getStage().setScene(new MenuManager().mainMenu());
+		} else 
+		{
+		    System.out.println("canceled");
+		}
+	}
+    
+    
     /**
      * Set a one player game scene
      */
@@ -122,6 +154,7 @@ public class GameSetter
         		case A: goWest  = true; playerOne.setRotate(180); break;
         		case D: goEast  = true; playerOne.setRotate(0); break;
                	case SHIFT: running = true; break;
+               	case ESCAPE: pause(); break;
            	}
     	});
     	onePlayer.setOnKeyReleased(e->
@@ -191,6 +224,7 @@ public class GameSetter
                 case LEFT: goWest2  = true; playerTwo.setRotate(180); break;
                 case RIGHT: goEast2  = true; playerTwo.setRotate(0); break;
                 case CONTROL: running2 = true; break;
+                case ESCAPE: pause(); break;
             }
             
         });

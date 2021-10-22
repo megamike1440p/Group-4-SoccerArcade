@@ -1,0 +1,36 @@
+This document is updated for SPRINT ONE and will be applicable during that phase of development.
+The nature of this application calls for a lot of manual testing, the program is written with JavaFX and uses scenes and nodes for most interaction, which aren't easily unit testable, so here is the manual testing criteria.
+For the application to be considered tested, each of the following steps should be taken and verified:
+
+MAIN MENU:
+	When "Start Game" is pressed, the scene should transition into the player select screen, offering a 'One Player' or 'Two Player' Option, the console will also output that the button was pressed
+	When 'Options' is pressed, the console will output that the button was pressed (functionality will be added in a later sprint)
+	When 'Exit' is pressed, the application will close, and the console will output that the button was pressed
+
+PLAYER SELECT:
+	When "One Player" is pressed, the scene will transition into a game state with one controllable character, the console will also output that the button was pressed
+	When "Two Player" is pressed, the scene will transition into a game state with one controllable character, the console will also output that the button was pressed
+
+IN GAME:
+	MOVEMENT:	
+		When player one presses 'W' the player should move in a smooth motion in the north direction
+		When player one presses 'S' the player should move in a smooth motion in the south direction
+		When player one presses 'A' the player should move in a smooth motion in the west direction
+		When player one presses 'D' the player should move in a smooth motion in the east direction
+		When player one presses 'SHIFT' the player's movement speed should increase
+		When player two presses 'UP' the player should move in a smooth motion in the north direction
+		When player two presses 'DOWN' the player should move in a smooth motion in the south direction
+		When player two presses 'LEFT' the player should move in a smooth motion in the west direction
+		When player two presses 'RIGHT' the player should move in a smooth motion in the east direction
+		When player two presses 'CONTROL' the player's movement speed should increase
+		
+		BOTH PLAYERS NEED TO BE TESTED TO INSURE THEY MOVE AT THE SAME SPEEDS WITH AND WITHOUT THE SPRINT KEY PRESSED
+
+	COLLISION:
+		When either player approaches the borders of the screen, the player should stop movement
+		When either player collides with eachother, they should not be allowed to move freely through the other, and a message will print to the console stating that collision is enabled or disabled
+
+	PAUSE:
+		When the 'ESCAPE' key is pressed, the player characters should not be allowed to move, and a notification should appear with text prompting the user if they want to return to the main menu
+		When the player presses 'OK' in the notification, they should be returned to the main menu. ALL MENU FUNCTIONALITY SHOULD BE RETESTED AFTER THIS TEST
+		When the player presses 'CANCEL' in the notification, they should be able to resume control of their characters ALL IN GAME FUNCTIONALITY SHOULD BE RETESTED AFTER THIS TEST

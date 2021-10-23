@@ -42,7 +42,11 @@ public class GameSetter
 	//Bools for controlling character movements
 	boolean running, goNorth, goSouth, goEast, goWest;
 	boolean running2, goNorth2, goSouth2, goEast2, goWest2;
+	boolean preventN, preventW, preventE, preventS = false;
+	boolean preventN2, preventW2, preventE2, preventS2 = false;
 	boolean collision = false;
+	
+	private int speed = 6;
 	
 	/**
 	 * Collision detection
@@ -214,15 +218,15 @@ public class GameSetter
         {
         	switch (e.getCode()) 
             {
-            	case W: goNorth = true; playerOne.setRotate(270); break;
-                case S: goSouth = true; playerOne.setRotate(90); break;
-                case A: goWest  = true; playerOne.setRotate(180); break;
-                case D: goEast  = true; playerOne.setRotate(0); break;
+            	case W: if (preventN) {goNorth = false; break;} goNorth = true; playerOne.setRotate(270); break;
+                case S: if(preventS) {goSouth = false; break;} goSouth = true; playerOne.setRotate(90); break;
+                case A: if (preventW) {goWest = false; break;} goWest  = true; playerOne.setRotate(180); break;
+                case D: if (preventE) {goEast = false; break;} else goEast  = true; playerOne.setRotate(0); break;
                 case SHIFT: running = true; break;
-                case UP: goNorth2 = true; playerTwo.setRotate(270); break;
-                case DOWN: goSouth2 = true; playerTwo.setRotate(90); break;
-                case LEFT: goWest2  = true; playerTwo.setRotate(180); break;
-                case RIGHT: goEast2  = true; playerTwo.setRotate(0); break;
+                case UP: if (preventN2) {goNorth2 = false; break;} goNorth2 = true; playerTwo.setRotate(270); break;
+                case DOWN: if (preventS2) {goSouth2 = false; break;} goSouth2 = true; playerTwo.setRotate(90); break;
+                case LEFT: if (preventW2) {goWest2 = false; break;} goWest2  = true; playerTwo.setRotate(180); break;
+                case RIGHT: if (preventE2) {goEast2 = false; break;} goEast2  = true; playerTwo.setRotate(0); break;
                 case CONTROL: running2 = true; break;
                 case ESCAPE: pause(); break;
             }
@@ -244,41 +248,140 @@ public class GameSetter
                 case CONTROL: running2 = false; break;
             } 
          });
+       
         
         //Timer for player one's animations, also handles collision testing
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) 
             {
-                int dx = 0, dy = 0;
-                if ((goNorth == true) && (playerCollision()) == false) {dy -= 1;}
-                else if ((goNorth == true) && (playerCollision()) == true) {dy += 1;}
-                if ((goSouth == true) && (playerCollision()) == false) {dy += 1;}
-                else if ((goSouth == true) && (playerCollision()) == true) {dy -= 1;}
-                if ((goEast == true) && (playerCollision()) == false) {dx += 1;}
-                else if ((goEast == true) && (playerCollision()) == true) {dx -=1;}
-                if ((goWest == true) && (playerCollision()) == false) {dx -= 1;}
-                else if ((goWest == true) && (playerCollision()) == true) {dx +=1;}
-                if (running) { dx *= 2; dy *= 2; }
+                int dx = 0, dy = 0;               
+                if ((goNorth == true) && (playerCollision()) == false) 
+                {
+                	dy -= speed;
+                	preventE = false;
+                	preventW = false;
+                	preventS = false;
+                }
+                else if ((goNorth == true) && (playerCollision()) == true) 
+                {
+                	
+                	dy += speed*2; 
+                	preventN = true; 
+                	goNorth = false;
+                	
+                }
+                if ((goSouth == true) && (playerCollision()) == false) 
+                {
+                	dy += speed;
+                	preventE = false;
+                	preventW = false;
+                	preventN = false;
+                }
+                else if ((goSouth == true) && (playerCollision()) == true) 
+                {
+                	dy -= speed*2;
+                	preventS = true;
+                	goSouth = false;
+                }
+                if ((goEast == true) && (playerCollision()) == false) 
+                {
+                	dx += speed;
+                	preventS = false;
+                	preventW = false;
+                	preventN = false;
+                }
+                else if ((goEast == true) && (playerCollision()) == true) 
+                {
+                	dx -=speed*2; 
+                	preventE = true; 
+                	goEast = false;
+                }
+                if ((goWest == true) && (playerCollision()) == false) 
+                {
+                	dx -= speed; 
+                	preventE = false;
+                	preventN = false;
+                	preventS = false;
+                }
+                else if ((goWest == true) && (playerCollision()) == true) 
+                {
+                	dx +=speed*2;
+                	goWest = false;
+                	preventW = true;
+                }
+                if (running) 
+                { 
+                	dx *= 2; dy *= 2; 
+                }
                 movePlayerBy(playerOne, dx, dy);
             }
         };
         
         //Timer for player two's animations, also handles collision checking
         AnimationTimer timer2 = new AnimationTimer() {
-            @Override
+        	@Override
             public void handle(long now) 
             {
-                int dx = 0, dy = 0;
-                if ((goNorth2 == true) && (playerCollision()) == false) {dy -= 1;}
-                else if ((goNorth2 == true) && (playerCollision()) == true) {dy += 1;}
-                if ((goSouth2 == true) && (playerCollision()) == false) {dy += 1;}
-                else if ((goSouth2 == true) && (playerCollision()) == true) {dy -= 1;}
-                if ((goEast2 == true) && (playerCollision()) == false) {dx += 1;}
-                else if ((goEast2 == true) && (playerCollision()) == true) {dx -=1;}
-                if ((goWest2 == true) && (playerCollision()) == false) {dx -= 1;}
-                else if ((goWest2 == true) && (playerCollision()) == true) {dx +=1;}
-                if (running2) { dx *= 2; dy *= 2; }
+                int dx = 0, dy = 0;               
+                if ((goNorth2 == true) && (playerCollision()) == false) 
+                {
+                	dy -= speed;
+                	preventE2 = false;
+                	preventW2 = false;
+                	preventS2 = false;
+                }
+                else if ((goNorth2 == true) && (playerCollision()) == true) 
+                {
+                	
+                	dy += speed*2; 
+                	preventN2 = true; 
+                	goNorth2 = false;
+                	
+                }
+                if ((goSouth2 == true) && (playerCollision()) == false) 
+                {
+                	dy += speed;
+                	preventE2 = false;
+                	preventW2 = false;
+                	preventN2 = false;
+                }
+                else if ((goSouth2 == true) && (playerCollision()) == true) 
+                {
+                	dy -= speed*2;
+                	preventS2 = true;
+                	goSouth2 = false;
+                }
+                if ((goEast2 == true) && (playerCollision()) == false) 
+                {
+                	dx += speed;
+                	preventS2 = false;
+                	preventW2 = false;
+                	preventN2 = false;
+                }
+                else if ((goEast2 == true) && (playerCollision()) == true) 
+                {
+                	dx -=speed*2; 
+                	preventE2 = true; 
+                	goEast2 = false;
+                }
+                if ((goWest2 == true) && (playerCollision()) == false) 
+                {
+                	dx -= speed; 
+                	preventE2 = false;
+                	preventN2 = false;
+                	preventS2 = false;
+                }
+                else if ((goWest2 == true) && (playerCollision()) == true) 
+                {
+                	dx +=speed*2;
+                	goWest2 = false;
+                	preventW2 = true;
+                }
+                if (running2) 
+                { 
+                	dx *= 2; dy *= 2; 
+                }
                 movePlayerBy(playerTwo, dx, dy);
             }
         };
